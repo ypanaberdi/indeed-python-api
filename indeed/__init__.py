@@ -7,7 +7,7 @@ import requests
 from lxml import etree
 
 
-def construct_query(self, all_words="", exact_phraze="",
+def construct_query( all_words="", exact_phraze="",
                     at_least_one="", none="", title="",
                     company=""):
     """
@@ -98,6 +98,9 @@ class Element():
         """.format(**self.__dict__)
         return row
 
+    def getTitle(self):
+        return self.title
+
 
 class Indeed():
     """
@@ -182,6 +185,7 @@ class Indeed():
         """
         self.publisher = publisher
         self.version = version
+        self.totalResults = 0
         self.format_results = "json"
         self.url = "http://api.indeed.com/ads/apisearch?publisher={publisher}"\
                    "&v={version}"\
@@ -205,9 +209,9 @@ class Indeed():
                    "&useragent={useragent}"
         self.results = []
 
-    def search_jobs(self, query, format_results="xml", callback="",
+    def search_jobs(self, query, format_results="json", callback="",
                     location="", state="", sort="", radius=25, site_type="",
-                    job_type="", start=10, limit=25, fromage="",
+                    job_type="", start=0, limit=25, fromage="",
                     highlight=False, filter_results=True,
                     latlong="", country="", chnl="",
                     userip="1.2.3.4",
@@ -340,6 +344,8 @@ class Indeed():
         response = requests.get(url, timeout=self.TIMEOUT)
         if format_results == "json":
             json_resp = response.json()['results']
+            self.totalResults = response.json()['totalResults']
+            #print(response.json())
             for i in json_resp:
                 title = i['jobtitle']
                 company = i['company']
