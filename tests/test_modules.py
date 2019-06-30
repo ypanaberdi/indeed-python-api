@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-from indeed.main import Query, Element, Indeed
-
+#from indeed.main import Query, Element, Indeed
+from indeed import construct_query, Element, Indeed
+__all__ = [construct_query, Element, Indeed]
 
 class TestQuery(TestCase):
     """
@@ -12,7 +13,8 @@ class TestQuery(TestCase):
         """
         Initialize Query instance
         """
-        self.q = Query()
+        self.indeed = Indeed();
+        self.q = self.indeed.con
 
     def test_only_one_word(self):
         """

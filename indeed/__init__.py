@@ -201,7 +201,7 @@ class Indeed():
                    "&limit={limit}"\
                    "&fromage={fromage}"\
                    "&highlight={highlight}"\
-                   "&filter={filter_results}"\
+                   "&filter={filter}"\
                    "&latlong={latlong}"\
                    "&co={country}"\
                    "&chnl={chnl}"\
@@ -212,9 +212,9 @@ class Indeed():
     def search_jobs(self, query, format_results="json", callback="",
                     location="", state="", sort="", radius=25, site_type="",
                     job_type="", start=0, limit=25, fromage="",
-                    highlight=False, filter_results=True,
+                    highlight=False, filter_dups=1,
                     latlong="", country="", chnl="",
-                    userip="1.2.3.4",
+                    userip="",
                     useragent="Mozilla/5.0 " +
                               "(Macintosh; Intel Mac OS X 10_8_2)"):
         """
@@ -326,7 +326,7 @@ class Indeed():
         site_type = "" if site_type not in self.SITE_TYPE else site_type
         job_type = "" if job_type not in self.JOB_TYPE else job_type
         highlight = +highlight
-        filter_results = +filter_results
+        filter_dups = +filter_dups
         country = self.COUNTRIES.get(country, "us")
         if self.results:
             self.results = []
@@ -338,9 +338,10 @@ class Indeed():
                               site_type=site_type, job_type=job_type,
                               start=start, limit=limit, fromage=fromage,
                               highlight=highlight,
-                              filter_results=filter_results,
+                              filter=filter_dups,
                               latlong=latlong, country=country, chnl=chnl,
                               userip=userip, useragent=useragent)
+        print(url)
         response = requests.get(url, timeout=self.TIMEOUT)
         if format_results == "json":
             json_resp = response.json()['results']

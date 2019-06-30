@@ -1,0 +1,7 @@
+queue_kicker: indeed_kicker_tasks
+queue_crawler: indeed_crawler_tasks
+queue_crawler_descr: indeed_crawler_descr_tasks
+publisher_id: 1
+dicts:
+    zip_codes: /home/ec2-user/projects/indeed.kicker/dicts/zip_codes_top700_10.json
+    titles:
