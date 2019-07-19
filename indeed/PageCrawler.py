@@ -45,7 +45,7 @@ class PageCrawler:
         # generate request for each page
         for x in range(1, pages_left+1):
             # delay between each request
-            time.sleep(getRandomSleepTime(1, 10))
+            time.sleep(getRandomSleepTime(3, 10)) # here we don't want to spam API.
             job_seq_number = x*self.limit
 
             # stop sending requests if we reached limit per query request

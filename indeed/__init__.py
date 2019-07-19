@@ -5,6 +5,8 @@
 #
 import requests
 from lxml import etree
+from indeed.utils import *
+import urllib.parse as urlparse
 
 
 def construct_query( all_words="", exact_phraze="",
@@ -75,12 +77,13 @@ class Element():
         self.url = url
         self.expired = expired
         self.date_published = date_published
+        self.job_id = (urlparse.parse_qs((urlparse.urlparse(url)).query))['jk'][0]
 
     def __repr__(self):
         """
         Give information when using print (ind.results)
         """
-        return self.title
+        return self.title + ' : ' + self.job_id
 
     def __str__(self):
         """
